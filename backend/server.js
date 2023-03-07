@@ -4,11 +4,6 @@ const port = 9007;
 const fs = require('fs');
 const path = require("path");
 
-let newData;
-
-
-
-
 app.use(express.json());
 
 const rawData = JSON.parse(fs.readFileSync('./backend/data.json', "utf8"));
@@ -18,7 +13,6 @@ for (let index = 0; index < cards.length; index++) {
     cards[index].id = index;
     cards[index].url =`./frontend/images/${index}.png`
   }
-console.log(cards)
 
 app.get("/", (req, res) => {
     res.redirect(301, '/cards');
@@ -34,7 +28,11 @@ app.get('/api/cards', (req,res) => {
     res.send(cards)
 })
 
+app.get(["/cards","/cards/:id"], async (req, res) => {
+  const param1 = URLSearchParams.get('region')
 
+  console.log(param1)
+})
 
 
 

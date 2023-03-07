@@ -18,65 +18,73 @@ function display(data) {
      Cost: ${card.cost}
      <img src=${card.url}></img>
      </div>`))
+
 //Region Selector
 let regions=[];
-     for (let i = 0; i < data.length; i++) {
-        regions.push(data[i].region)
-        
-     }
-     regions=[...new Set(regions)]
-     console.log(regions)
+
+   for (let i = 0; i < data.length; i++) {
+     regions.push(data[i].region)
+   }
+   regions = [...new Set(regions)]
     
-        
-     menuElement.insertAdjacentHTML('beforeend', '<select list=\'regions\' id=\'regions\'></select>');
-     const regionDropdown = document.getElementById('regions');
-     regionDropdown.insertAdjacentHTML('beforeend', '<option id=blank>Please select region</option>');
-     for (let i = 0; i < regions.length; i++) {
-       regionDropdown.insertAdjacentHTML('beforeend', `<option id=${i}>${regions[i] }</option>`);
-     }
+   menuElement.insertAdjacentHTML('beforeend', '<select list=\'regions\' id=\'regions\'></select>');
+   const regionDropdown = document.getElementById('regions');
+   regionDropdown.insertAdjacentHTML('beforeend', '<option id=blank>Please select region</option>');
+
+   for (let i = 0; i < regions.length; i++) {
+     regionDropdown.insertAdjacentHTML('beforeend', `<option id=${regions[i]}> ${regions[i]} </option>`);
+   }
+
 ///Type selctor
 let type=[];
-     for (let i = 0; i < data.length; i++) {
-        if(data[i].type===''){
-            data[i].type="other"
-        }
-        type.push(data[i].type)
-        
-     }
-     type=[...new Set(type)]
-     console.log(type)
+
+   for (let i = 0; i < data.length; i++) {
+      if(data[i].type===''){
+         data[i].type="other"
+      }
+   type.push(data[i].type)   
+   }
+   type=[...new Set(type)]
     
         
-     menuElement.insertAdjacentHTML('beforeend', '<select list=\'type\' id=\'type\'></select>');
-     const typeDropdown = document.getElementById('type');
-     typeDropdown.insertAdjacentHTML('beforeend', '<option id=blank>Please select type</option>');
-     for (let i = 0; i < type.length; i++) {
-        typeDropdown.insertAdjacentHTML('beforeend', `<option id=${i}>${type[i] }</option>`);
-     }
-///      Rarity Selector
-   
+   menuElement.insertAdjacentHTML('beforeend', '<select list=\'type\' id=\'type\'></select>');
+   const typeDropdown = document.getElementById('type');
+   typeDropdown.insertAdjacentHTML('beforeend', '<option id=blank>Please select type</option>');
+
+   for (let i = 0; i < type.length; i++) {
+      typeDropdown.insertAdjacentHTML('beforeend', `<option id=${type[i]}>${type[i]}</option>`);
+   }
+///Rarity Selector
 let rarity=[];
-     for (let i = 0; i < data.length; i++) {
-        if(data[i].rarity===''){
-            data[i].rarity="other"
-        }
-        rarity.push(data[i].rarity)
-        
-     }
-     rarity=[...new Set(rarity)]
-     console.log(rarity)
-    
-        
-     menuElement.insertAdjacentHTML('beforeend', '<select list=\'rarity\' id=\'rarity\'></select>');
-     const rarityDropdown = document.getElementById('rarity');
-     rarityDropdown.insertAdjacentHTML('beforeend', '<option id=blank>Please select rarity</option>');
-     for (let i = 0; i < rarity.length; i++) {
-        rarityDropdown.insertAdjacentHTML('beforeend', `<option id=${i}>${rarity[i] }</option>`);
-     } 
 
+   for (let i = 0; i < data.length; i++) {
+      if(data[i].rarity===''){
+       data[i].rarity="other"
+      }
+   rarity.push(data[i].rarity)    
+   }
+   rarity=[...new Set(rarity)]
+   
+   menuElement.insertAdjacentHTML('beforeend', '<select list=\'rarity\' id=\'rarity\'></select>');
+   const rarityDropdown = document.getElementById('rarity');
+   rarityDropdown.insertAdjacentHTML('beforeend', '<option id=blank>Please select rarity</option>');
 
+   for (let i = 0; i < rarity.length; i++) {
+      rarityDropdown.insertAdjacentHTML('beforeend', `<option id=${rarity[i]}>${rarity[i] }</option>`);
+   }
 }
 
+function filter(event) {
+fetch(`http://127.0.0.1:9007/api/cards/?region=noxus`)
+   .then((response) => response.json())
+   .then((data) => display(data))
+   console.log(event.target.value)
+}
+
+
+
+
+menuElement.addEventListener('click', filter);
 
 
 
