@@ -7,7 +7,8 @@ fetch('http://127.0.0.1:9007/api/cards')
 
 
 function display(data) {
-
+      rootElement.replaceChildren();
+      menuElement.replaceChildren();
     data.map(card => rootElement.insertAdjacentHTML('beforeend',
      `<div>
      Id:${card.id}
@@ -75,7 +76,8 @@ let rarity=[];
 }
 
 function filter(event) {
-fetch(`http://127.0.0.1:9007/api/cards/?region=noxus`)
+         
+fetch(`http://127.0.0.1:9007/api/cards/?region=${event.target.value}`)
    .then((response) => response.json())
    .then((data) => display(data))
    console.log(event.target.value)

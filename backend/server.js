@@ -25,14 +25,18 @@ app.get(["/cards","/cards/:id"], (req, res, next) => {
 app.use('/frontend', express.static('./frontend'))
 
 app.get('/api/cards', (req,res) => {
-    res.send(cards)
+    if( req.query.region === undefined) {
+        res.send(cards)
+    } else {
+      if(req.query.region !== 'Please select region') {
+        let filteredCards = cards.filter((card) => card.region === req.query.region)
+        console.log(filteredCards)
+        //console.log(req.query.region)
+        res.send(filteredCards);
+      }
+    }
 })
 
-app.get(["/cards","/cards/:id"], async (req, res) => {
-  const param1 = URLSearchParams.get('region')
-
-  console.log(param1)
-})
 
 
 
