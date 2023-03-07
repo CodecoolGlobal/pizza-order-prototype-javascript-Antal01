@@ -4,7 +4,11 @@ const menuElement= document.getElementById('menu')
 fetch('http://127.0.0.1:9007/api/cards')
 .then((response) => response.json())
 .then((data) => display(data))
-let new_obj={} ;
+let new_obj={
+    region: "null",
+    type: "null",
+    rarity: "null"
+};
 
 
 function display(data) {
@@ -31,7 +35,7 @@ let region=[];
     
    menuElement.insertAdjacentHTML('beforeend', '<select list=\'region\' id=\'region\'></select>');
    const regionDropdown = document.getElementById('region');
-   regionDropdown.insertAdjacentHTML('beforeend', '<option id="blank">Please select region</option>');
+   regionDropdown.insertAdjacentHTML('beforeend', '<option>Please select region</option>');
 
    for (let i = 0; i < region.length; i++) {
      regionDropdown.insertAdjacentHTML('beforeend', `<option id="region"> ${region[i]} </option>`);
@@ -72,7 +76,7 @@ let rarity=[];
    rarityDropdown.insertAdjacentHTML('beforeend', '<option id=blank>Please select rarity</option>');
 
    for (let i = 0; i < rarity.length; i++) {
-      rarityDropdown.insertAdjacentHTML('beforeend', `<option id="rarity">${rarity[i] }</option>`);
+      rarityDropdown.insertAdjacentHTML('beforeend', `<option id="rarity">${rarity[i]}</option>`);
    }
 }
 /*
@@ -83,41 +87,37 @@ fetch(`http://127.0.0.1:9007/api/cards/?region=${event.target.value}`)
    .then((data) => display(data))
    console.log(event.target.value)
 }*/
-function sendObj(event) {
+function sendObj(event) {   
+    //console.log(event.target.id)
+   if(event.target.id === "type"){
+      new_obj.type = event.target.value
+   }
     
-    
+   if(event.target.id === "region"){
+      new_obj.region = event.target.value
+   }
 
-
-   
-    if(event.target.id ==="type" ){
-      new_obj.type=event.target.value
-
-      }
-    
-    if(event.target.id ==="region"){
-      new_obj.region=event.target.value
-    }
-    if(event.target.id ==="rarity"){
-      new_obj.rarity=event.target.value
-    }
-
+   if(event.target.id === "rarity"){
+      new_obj.rarity = event.target.value
+   }
     console.log(new_obj);
+
     const url = 'http://127.0.0.1:9007/api/cards';
     fetch (url, {
       method: 'POST',
       headers:{
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify( new_obj),
+      body: JSON.stringify(new_obj),
     })
     .then((response) => response.json())
     .then((data) => display(data))
-  }
+}
 
 
 
 
-menuElement.addEventListener('click', sendObj);
+menuElement.addEventListener('change', sendObj);
 
 
 

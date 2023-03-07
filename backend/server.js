@@ -4,11 +4,6 @@ const port = 9007;
 const fs = require('fs');
 const path = require("path");
 
-let newData;
-
-
-
-
 app.use(express.json());
 
 const rawData = JSON.parse(fs.readFileSync('./backend/data.json', "utf8"));
@@ -31,26 +26,32 @@ app.get(["/cards", "/cards/:id"], (req, res, next) => {
 app.use('/frontend', express.static('./frontend'))
 
 app.get('/api/cards', (req, res) => {
-
     res.send(cards)
 })
 
 app.post('/api/cards', (req, res) => {
     let criteriObj = req.body;
-    //console.log(criteriObj)
     let filteredCards = [];
-    /*for (const key  in criteriObj) {
-     console.log("value" ,criteriObj[key])
-     console.log("key" ,key)*/
 
-
-
-    for (let i = 0; i < cards.length; i++) {
+    /*for (let i = 0; i < cards.length; i++) {
         if (cards[i].region === criteriObj.region) {
             filteredCards.push(cards[i])
-
-        }
+        } 
     }
+    for(let j = 0; j < filteredCards.length; j++) {
+      if(filteredCards[j].type === criteriObj.type) {
+        filteredCards.push(filteredCards[j])
+      } 
+    }
+    for(let k = 0; k < filteredCards.length; k++) {
+      if(filteredCards[k].rarity === criteriObj.rarity) {
+        filteredCards.push(filteredCards[k])
+      }
+    }*/
+    //for( let i = 0; i < )
+    
+
+    console.log(criteriObj)
     res.send(filteredCards)
 })
 
