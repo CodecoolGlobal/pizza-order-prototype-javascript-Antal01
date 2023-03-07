@@ -4,10 +4,21 @@ const port = 9007;
 const fs = require('fs');
 const path = require("path");
 
+let newData;
+
+
+
+
 app.use(express.json());
 
 const rawData = JSON.parse(fs.readFileSync('./backend/data.json', "utf8"));
 const cards = rawData;
+
+for (let index = 0; index < cards.length; index++) {
+    cards[index].id = index;
+    cards[index].url =`./frontend/images/${index}.png`
+  }
+console.log(cards)
 
 app.get("/", (req, res) => {
     res.redirect(301, '/cards');
