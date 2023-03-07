@@ -4,6 +4,7 @@ const menuElement= document.getElementById('menu')
 fetch('http://127.0.0.1:9007/api/cards')
 .then((response) => response.json())
 .then((data) => display(data))
+let new_obj={} ;
 
 
 function display(data) {
@@ -21,19 +22,19 @@ function display(data) {
      </div>`))
 
 //Region Selector
-let regions=[];
+let region=[];
 
    for (let i = 0; i < data.length; i++) {
-     regions.push(data[i].region)
+     region.push(data[i].region)
    }
-   regions = [...new Set(regions)]
+   region = [...new Set(region)]
     
-   menuElement.insertAdjacentHTML('beforeend', '<select list=\'regions\' id=\'regions\'></select>');
-   const regionDropdown = document.getElementById('regions');
-   regionDropdown.insertAdjacentHTML('beforeend', '<option id=blank>Please select region</option>');
+   menuElement.insertAdjacentHTML('beforeend', '<select list=\'region\' id=\'region\'></select>');
+   const regionDropdown = document.getElementById('region');
+   regionDropdown.insertAdjacentHTML('beforeend', '<option id="blank">Please select region</option>');
 
-   for (let i = 0; i < regions.length; i++) {
-     regionDropdown.insertAdjacentHTML('beforeend', `<option id=${regions[i]}> ${regions[i]} </option>`);
+   for (let i = 0; i < region.length; i++) {
+     regionDropdown.insertAdjacentHTML('beforeend', `<option id="region"> ${region[i]} </option>`);
    }
 
 ///Type selctor
@@ -53,7 +54,7 @@ let type=[];
    typeDropdown.insertAdjacentHTML('beforeend', '<option id=blank>Please select type</option>');
 
    for (let i = 0; i < type.length; i++) {
-      typeDropdown.insertAdjacentHTML('beforeend', `<option id=${type[i]}>${type[i]}</option>`);
+      typeDropdown.insertAdjacentHTML('beforeend', `<option id="type">${type[i]}</option>`);
    }
 ///Rarity Selector
 let rarity=[];
@@ -71,22 +72,52 @@ let rarity=[];
    rarityDropdown.insertAdjacentHTML('beforeend', '<option id=blank>Please select rarity</option>');
 
    for (let i = 0; i < rarity.length; i++) {
-      rarityDropdown.insertAdjacentHTML('beforeend', `<option id=${rarity[i]}>${rarity[i] }</option>`);
+      rarityDropdown.insertAdjacentHTML('beforeend', `<option id="rarity">${rarity[i] }</option>`);
    }
 }
-
+/*
 function filter(event) {
          
 fetch(`http://127.0.0.1:9007/api/cards/?region=${event.target.value}`)
    .then((response) => response.json())
    .then((data) => display(data))
    console.log(event.target.value)
-}
+}*/
+function sendObj(event) {
+    
+    
+
+
+   
+    if(event.target.id ==="type" ){
+      new_obj.type=event.target.value
+
+      }
+    
+    if(event.target.id ==="region"){
+      new_obj.region=event.target.value
+    }
+    if(event.target.id ==="rarity"){
+      new_obj.rarity=event.target.value
+    }
+
+    console.log(new_obj);
+    const url = 'http://127.0.0.1:9007/api/cards';
+    fetch (url, {
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify( new_obj),
+    })
+    .then((response) => response.json())
+    .then((data) => display(data))
+  }
 
 
 
 
-menuElement.addEventListener('click', filter);
+menuElement.addEventListener('click', sendObj);
 
 
 
