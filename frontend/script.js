@@ -5,9 +5,9 @@ fetch('http://127.0.0.1:9007/api/cards')
 .then((response) => response.json())
 .then((data) => display(data))
 let new_obj={
-    region: "null",
-    type: "null",
-    rarity: "null"
+    region: undefined,
+    type: undefined,
+    rarity: undefined,
 };
 
 
@@ -35,7 +35,7 @@ let region=[];
     
    menuElement.insertAdjacentHTML('beforeend', '<select list=\'region\' id=\'region\'></select>');
    const regionDropdown = document.getElementById('region');
-   regionDropdown.insertAdjacentHTML('beforeend', '<option>Please select region</option>');
+   regionDropdown.insertAdjacentHTML('beforeend', '<option id=blank>Please select region</option>');
 
    for (let i = 0; i < region.length; i++) {
      regionDropdown.insertAdjacentHTML('beforeend', `<option id="region"> ${region[i]} </option>`);
@@ -60,6 +60,7 @@ let type=[];
    for (let i = 0; i < type.length; i++) {
       typeDropdown.insertAdjacentHTML('beforeend', `<option id="type">${type[i]}</option>`);
    }
+
 ///Rarity Selector
 let rarity=[];
 
@@ -79,16 +80,9 @@ let rarity=[];
       rarityDropdown.insertAdjacentHTML('beforeend', `<option id="rarity">${rarity[i]}</option>`);
    }
 }
-/*
-function filter(event) {
-         
-fetch(`http://127.0.0.1:9007/api/cards/?region=${event.target.value}`)
-   .then((response) => response.json())
-   .then((data) => display(data))
-   console.log(event.target.value)
-}*/
+
 function sendObj(event) {   
-    //console.log(event.target.id)
+    
    if(event.target.id === "type"){
       new_obj.type = event.target.value
    }

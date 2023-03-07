@@ -13,7 +13,6 @@ for (let index = 0; index < cards.length; index++) {
     cards[index].id = index;
     cards[index].url = `../frontend/images/${index}.png`
 }
-//console.log(cards)
 
 app.get("/", (req, res) => {
     res.redirect(301, '/cards');
@@ -33,25 +32,14 @@ app.post('/api/cards', (req, res) => {
     let criteriObj = req.body;
     let filteredCards = [];
 
-    /*for (let i = 0; i < cards.length; i++) {
-        if (cards[i].region === criteriObj.region) {
-            filteredCards.push(cards[i])
-        } 
-    }
-    for(let j = 0; j < filteredCards.length; j++) {
-      if(filteredCards[j].type === criteriObj.type) {
-        filteredCards.push(filteredCards[j])
-      } 
-    }
-    for(let k = 0; k < filteredCards.length; k++) {
-      if(filteredCards[k].rarity === criteriObj.rarity) {
-        filteredCards.push(filteredCards[k])
+    filteredCards = cards.filter(function(item) {
+      for (const key in criteriObj) {
+        if (item[key] === 'null' || item[key] != criteriObj[key]) {
+          return false;
+        }
       }
-    }*/
-    //for( let i = 0; i < )
-    
-
-    console.log(criteriObj)
+      return true;
+    })
     res.send(filteredCards)
 })
 
