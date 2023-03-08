@@ -37,7 +37,6 @@ app.get('/api/cards', (req, res) => {
     res.send(cards)
 })
 
-
 app.post('/api/cards', (req, res) => {
   let criteriObj = req.body;
   let filteredCards = [];

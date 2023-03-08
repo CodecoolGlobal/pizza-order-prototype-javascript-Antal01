@@ -1,5 +1,6 @@
 const rootElement = document.getElementById('root')
 const menuElement = document.getElementById('menu')
+const titleElement = document.getElementById('mainTitle')
 
 fetch('http://127.0.0.1:9007/api/cards')
    .then((response) => response.json())
@@ -13,10 +14,11 @@ let new_obj = {
 function displayMain(data) {
    rootElement.replaceChildren();
    menuElement.replaceChildren();
-   menuElement.insertAdjacentHTML("beforebegin", " <div id=mainTitle>Legends Of Runterra  </div>")
+   titleElement.replaceChildren();
+
+   titleElement.insertAdjacentHTML("beforeend", " <div>Legends Of Runterra</div>")
    data.map(card => rootElement.insertAdjacentHTML('beforeend',
-      `<div>
-     
+     `<div>
      Name: ${card.name}
      Type: ${card.type}
      Rarity: ${card.rarity}
@@ -24,7 +26,6 @@ function displayMain(data) {
      Cost: ${card.cost}
      <img src=${card.url}></img>
      <button id="${card.id}">Add to Deck</button>
-
      </div>`))
 
    //Region Selector
@@ -88,11 +89,11 @@ function displayDeck(data) {
    let cardNumbersById = []
    rootElement.replaceChildren();
    menuElement.replaceChildren();
+   titleElement.replaceChildren();
 
-   menuElement.insertAdjacentHTML("beforeend", " <div id=deckTitle> My Deck </div>")
+   titleElement.insertAdjacentHTML("beforeend", " <div>My Deck</div>")
    data.map(card => rootElement.insertAdjacentHTML('beforeend',
       `<div>
-  
   Name: ${card.name}
   Type: ${card.type}
   Rarity: ${card.rarity}
@@ -140,17 +141,17 @@ if (window.location.href === 'http://127.0.0.1:9007/cards/deck') {
       .then((data) => displayDeck(data))
 }
 
-
 function resetEvent(event)
 {
-   if(event.target.id==="resetbtn"){
-      displayMain(data)
-      console.log(event.target.id)
+   if(event.target.id === "resetbtn"){
+      location.reload()
+      console.log('kiscica')
    }
 }
-menuElement.addEventListener("click" , resetEvent)
-rootElement.addEventListener("click", addDeck)
+
+menuElement.addEventListener("click", resetEvent)
 menuElement.addEventListener('change', sendObj);
+rootElement.addEventListener("click", addDeck)
 
 
 
