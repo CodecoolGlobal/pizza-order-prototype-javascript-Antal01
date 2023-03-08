@@ -18,13 +18,13 @@ function displayMain(data) {
 
    titleElement.insertAdjacentHTML("beforeend", " <div>Legends Of Runterra</div>")
    data.map(card => rootElement.insertAdjacentHTML('beforeend',
-     `<div>
-     Name: ${card.name}
-     Type: ${card.type}
-     Rarity: ${card.rarity}
-     Region: ${card.region}
-     Cost: ${card.cost}
+     `<div class="listedCardsMain" >
+     Name: ${card.name}</br>
      <img src=${card.url}></img>
+     Type: ${card.type}</br>
+     Rarity: ${card.rarity}</br>
+     Region: ${card.region}</br>
+     Cost: ${card.cost}</br>
      <button id="${card.id}">Add to Deck</button>
      </div>`))
 
@@ -94,13 +94,13 @@ function displayDeck(data) {
 
    titleElement.insertAdjacentHTML("beforeend", " <div>My Deck</div>")
    data.map(card => rootElement.insertAdjacentHTML('beforeend',
-      `<div>
-  Name: ${card.name}
-  Type: ${card.type}
-  Rarity: ${card.rarity}
-  Region: ${card.region}
-  Cost: ${card.cost}
+      `<div class="listedCardsDeck">
+  Name: ${card.name}</br>
   <img src=${card.url}></img>
+  Type: ${card.type}</br>
+  Rarity: ${card.rarity}</br>
+  Region: ${card.region}</br>
+  Cost: ${card.cost}</br>
   <button id="${card.id}">number</button>
   </div>`))
 
