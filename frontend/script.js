@@ -3,7 +3,7 @@ const menuElement= document.getElementById('menu')
 
 fetch('http://127.0.0.1:9007/api/cards')
 .then((response) => response.json())
-.then((data) => display(data))
+.then((data) => displayMain(data))
 let new_obj={
     region: undefined,
     type: undefined,
@@ -11,7 +11,7 @@ let new_obj={
 };
 
 
-function display(data) {
+function displayMain(data) {
       rootElement.replaceChildren();
       menuElement.replaceChildren();
     data.map(card => rootElement.insertAdjacentHTML('beforeend',
@@ -23,6 +23,8 @@ function display(data) {
      Region: ${card.region}
      Cost: ${card.cost}
      <img src=${card.url}></img>
+     <button id="${card.id}">Add to Deck</button>
+
      </div>`))
 
 //Region Selector
@@ -80,7 +82,24 @@ let rarity=[];
       rarityDropdown.insertAdjacentHTML('beforeend', `<option id="rarity">${rarity[i]}</option>`);
    }
 }
+function displayDeck(data){
+   let cardNumbersById=[]
+   rootElement.replaceChildren();
+   menuElement.replaceChildren();
+ data.map(card => rootElement.insertAdjacentHTML('beforeend',
+  `<div>
+  Id:${card.id}
+  Name: ${card.name}
+  Type: ${card.type}
+  Rarity: ${card.rarity}
+  Region: ${card.region}
+  Cost: ${card.cost}
+  <img src=${card.url}></img>
+  <button id="${card.id}">number</button>
 
+  </div>`))
+
+}
 function sendObj(event) {   
     
    if(event.target.id === "type"){
@@ -105,12 +124,23 @@ function sendObj(event) {
       body: JSON.stringify(new_obj),
     })
     .then((response) => response.json())
-    .then((data) => display(data))
+    .then((data) => displayMain(data))
 }
 
+function addDeck(event){
+   fetch(`http://127.0.0.1:9007/api/cards/?addDeck=${event.target.id}`)
+   .then((response) => response.json())
+   .then((data) => displayMain(data))
+}
+
+fetch('http://127.0.0.1:9007/api/cards/deck')
+.then((response) => response.json())
+.then((data) => displayDeck(data))
 
 
 
+
+window.addEventListener("click" , addDeck)
 menuElement.addEventListener('change', sendObj);
 
 

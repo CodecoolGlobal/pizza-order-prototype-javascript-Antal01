@@ -8,6 +8,7 @@ app.use(express.json());
 
 const rawData = JSON.parse(fs.readFileSync('./backend/data.json', "utf8"));
 const cards = rawData;
+let myDeck=[]
 
 for (let index = 0; index < cards.length; index++) {
     cards[index].id = index;
@@ -18,14 +19,35 @@ app.get("/", (req, res) => {
     res.redirect(301, '/cards');
 })
 
-app.get(["/cards", "/cards/:id"], (req, res, next) => {
+
+
+app.get(["/cards"], (req, res, next) => {
     res.sendFile(path.join(`${__dirname}/../frontend/index.html`));
 });
 
 app.use('/frontend', express.static('./frontend'))
 
 app.get('/api/cards', (req, res) => {
+    let incomingCard=req.query;
+    
+    for (let i = 0; i < cards.length; i++) {
+      if(cards[i].id===Number(incomingCard.addDeck)){
+        
+        myDeck.push(cards[i])
+      }
+      
+    }
+    console.log(myDeck)
     res.send(cards)
+})
+
+app.get(["/cards/deck"], (req, res, next) => {
+  res.sendFile(path.join(`${__dirname}/../frontend/index.html`));
+});
+
+
+app.get("/api/cards/deck" , (req, res) => {
+  res.send(myDeck)
 })
 
 app.post('/api/cards', (req, res) => {
@@ -34,7 +56,7 @@ app.post('/api/cards', (req, res) => {
 
     filteredCards = cards.filter(function(item) {
       for (const key in criteriObj) {
-        if (item[key] === 'null' || item[key] != criteriObj[key]) {
+        if (item[key] === undefined || item[key] != criteriObj[key]) {
           return false;
         }
       }
@@ -42,6 +64,8 @@ app.post('/api/cards', (req, res) => {
     })
     res.send(filteredCards)
 })
+
+
 
 
 
