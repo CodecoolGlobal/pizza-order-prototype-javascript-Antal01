@@ -130,9 +130,7 @@ function sendObj(event) {
       .then((data) => displayMain(data))
 }
 function addDeck(event) {
-   fetch(`http://127.0.0.1:9007/api/cards/?addDeck=${event.target.id}`)
-      .then((response) => response.json())
-      .then((data) => displayMain(data))
+   fetch(`http://127.0.0.1:9007/api/cards/?addDeck=${event.target.id}`)    
 }
 
 if (window.location.href === 'http://127.0.0.1:9007/cards/deck') {
