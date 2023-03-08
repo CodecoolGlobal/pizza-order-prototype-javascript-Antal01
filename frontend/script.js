@@ -1,5 +1,5 @@
 const rootElement = document.getElementById('root')
-const menuElement= document.getElementById('menu')
+const menuElement = document.getElementById('menu')
 
 fetch('http://127.0.0.1:9007/api/cards')
 .then((response) => response.json())
@@ -9,7 +9,6 @@ let new_obj={
     type: undefined,
     rarity: undefined,
 };
-
 
 function displayMain(data) {
       rootElement.replaceChildren();
@@ -86,7 +85,7 @@ function displayDeck(data){
    let cardNumbersById=[]
    rootElement.replaceChildren();
    menuElement.replaceChildren();
- data.map(card => rootElement.insertAdjacentHTML('beforeend',
+   data.map(card => rootElement.insertAdjacentHTML('beforeend',
   `<div>
   Id:${card.id}
   Name: ${card.name}
@@ -96,9 +95,7 @@ function displayDeck(data){
   Cost: ${card.cost}
   <img src=${card.url}></img>
   <button id="${card.id}">number</button>
-
   </div>`))
-
 }
 function sendObj(event) {   
     
@@ -126,21 +123,22 @@ function sendObj(event) {
     .then((response) => response.json())
     .then((data) => displayMain(data))
 }
-
 function addDeck(event){
    fetch(`http://127.0.0.1:9007/api/cards/?addDeck=${event.target.id}`)
    .then((response) => response.json())
    .then((data) => displayMain(data))
 }
 
+if(window.location.href === 'http://127.0.0.1:9007/cards/deck') {
 fetch('http://127.0.0.1:9007/api/cards/deck')
 .then((response) => response.json())
 .then((data) => displayDeck(data))
+}
 
 
 
 
-window.addEventListener("click" , addDeck)
+rootElement.addEventListener("click" , addDeck)
 menuElement.addEventListener('change', sendObj);
 
 

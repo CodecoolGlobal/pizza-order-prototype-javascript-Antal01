@@ -8,7 +8,8 @@ app.use(express.json());
 
 const rawData = JSON.parse(fs.readFileSync('./backend/data.json', "utf8"));
 const cards = rawData;
-let myDeck=[]
+
+let myDeck=[];
 
 for (let index = 0; index < cards.length; index++) {
     cards[index].id = index;
@@ -16,53 +17,47 @@ for (let index = 0; index < cards.length; index++) {
 }
 
 app.get("/", (req, res) => {
-    res.redirect(301, '/cards');
+  res.redirect(301, '/cards');
 })
 
-
-
-app.get(["/cards"], (req, res, next) => {
+app.get("/cards", (req, res, next) => {
     res.sendFile(path.join(`${__dirname}/../frontend/index.html`));
 });
 
 app.use('/frontend', express.static('./frontend'))
 
 app.get('/api/cards', (req, res) => {
-    let incomingCard=req.query;
-    
+    let incomingCard = req.query;
     for (let i = 0; i < cards.length; i++) {
-      if(cards[i].id===Number(incomingCard.addDeck)){
-        
+      if(cards[i].id === Number(incomingCard.addDeck)){
         myDeck.push(cards[i])
       }
-      
     }
-    console.log(myDeck)
+    //console.log(myDeck)
     res.send(cards)
 })
 
-app.get(["/cards/deck"], (req, res, next) => {
-  res.sendFile(path.join(`${__dirname}/../frontend/index.html`));
-});
-
-
-app.get("/api/cards/deck" , (req, res) => {
-  res.send(myDeck)
-})
 
 app.post('/api/cards', (req, res) => {
-    let criteriObj = req.body;
-    let filteredCards = [];
-
-    filteredCards = cards.filter(function(item) {
-      for (const key in criteriObj) {
-        if (item[key] === undefined || item[key] != criteriObj[key]) {
-          return false;
-        }
+  let criteriObj = req.body;
+  let filteredCards = [];
+  
+  filteredCards = cards.filter(function(item) {
+    for (const key in criteriObj) {
+      if (item[key] === undefined || item[key] != criteriObj[key]) {
+        return false;
       }
-      return true;
-    })
-    res.send(filteredCards)
+    }
+    return true;
+  })
+  res.send(filteredCards)
+})
+
+app.get("/cards/deck", (req, res, next) => {
+  res.sendFile(path.join(`${__dirname}/../frontend/index.html`));
+});
+app.get('/api/cards/deck' , (req, res) => {
+  res.send(myDeck)
 })
 
 
