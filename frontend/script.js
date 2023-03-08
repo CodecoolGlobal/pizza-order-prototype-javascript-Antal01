@@ -83,6 +83,7 @@ function displayMain(data) {
       rarityDropdown.insertAdjacentHTML('beforeend', `<option id="rarity">${rarity[i]}</option>`);
    }
 
+   menuElement.insertAdjacentHTML("beforeend" , "<button id=nextbtn>My Deck</button>")
    menuElement.insertAdjacentHTML("beforeend" , "<button id=resetbtn>Reset</button>")
 }
 function displayDeck(data) {
@@ -102,6 +103,8 @@ function displayDeck(data) {
   <img src=${card.url}></img>
   <button id="${card.id}">number</button>
   </div>`))
+
+  menuElement.insertAdjacentHTML("beforeend" , "<button id=mainPagebtn>Main Page</button>")
 }
 function sendObj(event) {
 
@@ -130,9 +133,7 @@ function sendObj(event) {
       .then((data) => displayMain(data))
 }
 function addDeck(event) {
-   fetch(`http://127.0.0.1:9007/api/cards/?addDeck=${event.target.id}`)
-      .then((response) => response.json())
-      .then((data) => displayMain(data))
+   fetch(`http://127.0.0.1:9007/api/cards/?addDeck=${event.target.id}`)    
 }
 
 if (window.location.href === 'http://127.0.0.1:9007/cards/deck') {
@@ -149,6 +150,21 @@ function resetEvent(event)
    }
 }
 
+function nextPageEvent(event) {
+   if(event.target.id === 'nextbtn'){
+      location.replace('http://127.0.0.1:9007/cards/deck')
+   }
+ }
+ 
+function mainPageEvent(event) {
+   if(event.target.id === 'mainPagebtn'){
+      location.replace('http://127.0.0.1:9007/cards')
+   }
+ }
+
+ 
+menuElement.addEventListener("click", mainPageEvent)
+menuElement.addEventListener("click", nextPageEvent)
 menuElement.addEventListener("click", resetEvent)
 menuElement.addEventListener('change', sendObj);
 rootElement.addEventListener("click", addDeck)
