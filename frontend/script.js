@@ -21,9 +21,9 @@ function displayMain(data) {
      `<div class="listedCardsMain" >
      Name: ${card.name}</br>
      <img src=${card.url}></img>
-     Type: ${card.type}</br>
-     Rarity: ${card.rarity}</br>
-     Region: ${card.region}</br>
+     Type: ${card.type.charAt(0).toUpperCase()+ card.type.slice(1)}</br>
+     Rarity: ${card.rarity.charAt(0).toUpperCase()+ card.rarity.slice(1)}</br>
+     Region: ${card.region.charAt(0).toUpperCase()+ card.region.slice(1)}</br>
      Cost: ${card.cost}</br>
      <button id="${card.id}">Add to Deck</button>
      </div>`))
@@ -97,9 +97,9 @@ function displayDeck(data) {
       `<div class="listedCardsDeck">
   Name: ${card.name}</br>
   <img src=${card.url}></img>
-  Type: ${card.type}</br>
-  Rarity: ${card.rarity}</br>
-  Region: ${card.region}</br>
+  Type: ${card.type.charAt(0).toUpperCase()+ card.type.slice(1)}</br>
+  Rarity: ${card.rarity.charAt(0).toUpperCase()+ card.rarity.slice(1)}</br>
+  Region: ${card.region.charAt(0).toUpperCase()+ card.region.slice(1)}</br>
   Cost: ${card.cost}</br>
   <button id="${card.id}">number</button>
   </div>`))
