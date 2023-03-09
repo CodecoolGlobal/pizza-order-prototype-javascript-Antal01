@@ -94,7 +94,7 @@ function displayDeck(data) {
 
    titleElement.insertAdjacentHTML("beforeend", " <div>My Deck</div>")
    data.map(card => rootElement.insertAdjacentHTML('beforeend',
-      `<div class="listedCardsDeck">
+      `<div class="listedCardsMain">
   Name: ${card.name}</br>
   <img src=${card.url}></img>
   Type: ${card.type}</br>
