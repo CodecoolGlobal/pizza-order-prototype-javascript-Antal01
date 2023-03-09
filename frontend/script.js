@@ -86,27 +86,29 @@ function displayMain(data) {
    menuElement.insertAdjacentHTML("beforeend" , "<button id=nextbtn>My Deck</button>")
    menuElement.insertAdjacentHTML("beforeend" , "<button id=resetbtn>Reset</button>")
 }
+
 function displayDeck(data) {
-   let cardNumbersById = []
    rootElement.replaceChildren();
    menuElement.replaceChildren();
    titleElement.replaceChildren();
 
    titleElement.insertAdjacentHTML("beforeend", " <div>My Deck</div>")
+   titleElement.insertAdjacentHTML("afterend", `<div class="numberOfMyCards">Number Of My Cards: ${data.length}</div>`)
    data.map(card => rootElement.insertAdjacentHTML('beforeend',
       `<div class="listedCardsMain">
   Name: ${card.name}</br>
   <img src=${card.url}></img>
-  Type: ${card.type.charAt(0).toUpperCase()+ card.type.slice(1)}</br>
-  Rarity: ${card.rarity.charAt(0).toUpperCase()+ card.rarity.slice(1)}</br>
-  Region: ${card.region.charAt(0).toUpperCase()+ card.region.slice(1)}</br>
+  Type: ${card.type.charAt(0).toUpperCase() + card.type.slice(1)}</br>
+  Rarity: ${card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1)}</br>
+  Region: ${card.region.charAt(0).toUpperCase() + card.region.slice(1)}</br>
   Cost: ${card.cost}</br>
   <button id="${card.id}">number</button>
   </div>`))
 
   menuElement.insertAdjacentHTML("beforeend" , "<button id=mainPagebtn>Main Page</button>")
 }
-function sendObj(event) {
+
+function FilteringCriterias(event) {
 
    if (event.target.id === "type") {
       new_obj.type = event.target.value
@@ -132,8 +134,14 @@ function sendObj(event) {
       .then((response) => response.json())
       .then((data) => displayMain(data))
 }
+
 function addDeck(event) {
-   fetch(`http://127.0.0.1:9007/api/cards/?addDeck=${event.target.id}`)    
+   if(event.target.value != undefined) {
+      fetch(`http://127.0.0.1:9007/api/cards/?addDeck=${event.target.id}`)  
+   }  
+   if(window.location.href === 'http://127.0.0.1:9007/cards/deck' && event.target.value != undefined) {
+      location.reload();
+   }
 }
 
 if (window.location.href === 'http://127.0.0.1:9007/cards/deck') {
@@ -142,11 +150,9 @@ if (window.location.href === 'http://127.0.0.1:9007/cards/deck') {
       .then((data) => displayDeck(data))
 }
 
-function resetEvent(event)
-{
+function resetEvent(event) {
    if(event.target.id === "resetbtn"){
       location.reload()
-      console.log('kiscica')
    }
 }
 
@@ -154,19 +160,19 @@ function nextPageEvent(event) {
    if(event.target.id === 'nextbtn'){
       location.replace('http://127.0.0.1:9007/cards/deck')
    }
- }
+}
  
 function mainPageEvent(event) {
    if(event.target.id === 'mainPagebtn'){
       location.replace('http://127.0.0.1:9007/cards')
    }
- }
+}
 
  
 menuElement.addEventListener("click", mainPageEvent)
 menuElement.addEventListener("click", nextPageEvent)
 menuElement.addEventListener("click", resetEvent)
-menuElement.addEventListener('change', sendObj);
+menuElement.addEventListener('change', FilteringCriterias);
 rootElement.addEventListener("click", addDeck)
 
 
