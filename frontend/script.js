@@ -5,6 +5,7 @@ const titleElement = document.getElementById('mainTitle')
 fetch('http://127.0.0.1:9007/api/cards')
    .then((response) => response.json())
    .then((data) => displayMain(data))
+   
 let new_obj = {
    region: undefined,
    type: undefined,
@@ -102,7 +103,8 @@ function displayDeck(data) {
   Rarity: ${card.rarity.charAt(0).toUpperCase() + card.rarity.slice(1)}</br>
   Region: ${card.region.charAt(0).toUpperCase() + card.region.slice(1)}</br>
   Cost: ${card.cost}</br>
-  <button id="${card.id}">number</button>
+  <button id="${card.id}">Add</button>
+  <button id="${card.name}">Delete</button>
   </div>`))
 
   menuElement.insertAdjacentHTML("beforeend" , "<button id=mainPagebtn>Main Page</button>")
@@ -137,7 +139,8 @@ function FilteringCriterias(event) {
 
 function addDeck(event) {
    if(event.target.value != undefined) {
-      fetch(`http://127.0.0.1:9007/api/cards/?addDeck=${event.target.id}`)  
+      fetch(`http://127.0.0.1:9007/api/cards/?addDeck=${event.target.id}`) 
+
    }  
    if(window.location.href === 'http://127.0.0.1:9007/cards/deck' && event.target.value != undefined) {
       location.reload();
@@ -168,12 +171,23 @@ function mainPageEvent(event) {
    }
 }
 
- 
+function deleteCard (event) {
+
+   if (window.location.href === 'http://127.0.0.1:9007/cards/deck') {
+      console.log(event.target.id)
+      fetch(`http://127.0.0.1:9007/api/cards/deck/?DeleteDeck=${event.target.id}`, {
+         method: 'DELETE',
+      })
+   }
+} 
+
 menuElement.addEventListener("click", mainPageEvent)
 menuElement.addEventListener("click", nextPageEvent)
 menuElement.addEventListener("click", resetEvent)
 menuElement.addEventListener('change', FilteringCriterias);
 rootElement.addEventListener("click", addDeck)
+rootElement.addEventListener("click", deleteCard)
+
 
 
 

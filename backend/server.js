@@ -55,19 +55,22 @@ app.post('/api/cards', (req, res) => {
 app.get("/cards/deck", (req, res, next) => {
   res.sendFile(path.join(`${__dirname}/../frontend/index.html`));
 });
+
 app.get('/api/cards/deck' , (req, res) => {
   res.send(myDeck)
 })
 
+app.delete('/api/cards/deck', (req, res) => {
+let deleteData = req.query;
 
-
-
-
-
-
-
-
-
+  for(let i = 0;  i < myDeck.length; i++) {
+      if(myDeck[i].name === deleteData.DeleteDeck) {
+         myDeck.splice(i,1)
+          break;
+      }
+  }
+  res.send(myDeck)
+})
 
 
 app.listen(port, _ => console.log(`http://127.0.0.1:${port}`));
