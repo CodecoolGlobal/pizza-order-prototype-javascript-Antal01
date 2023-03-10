@@ -33,6 +33,8 @@ app.get('/api/cards', (req, res) => {
         myDeck.push(cards[i])
       }
     }
+    // fs.writeFileSync("deck.json", JSON.stringify({name: "my awesome deck", cards: []}))
+    // JSON.parse(fs.readFileSync("deck.json"))
     //console.log(myDeck)
     res.send(cards)
 })
