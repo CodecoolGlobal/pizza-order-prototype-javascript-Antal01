@@ -2,9 +2,11 @@ const rootElement = document.getElementById('root')
 const menuElement = document.getElementById('menu')
 const titleElement = document.getElementById('mainTitle')
 
-fetch('http://127.0.0.1:9007/api/cards')
-   .then((response) => response.json())
-   .then((data) => displayMain(data))
+if (location.href.endsWith('/cards')) {
+   fetch('http://127.0.0.1:9007/api/cards')
+      .then((response) => response.json())
+      .then((data) => displayMain(data))
+}
    
 let new_obj = {
    region: undefined,
@@ -12,13 +14,9 @@ let new_obj = {
    rarity: undefined,
 };
 
-function displayMain(data) {
+function displayCards(cards) {
    rootElement.replaceChildren();
-   menuElement.replaceChildren();
-   titleElement.replaceChildren();
-
-   titleElement.insertAdjacentHTML("beforeend", " <div>Legends Of Runterra</div>")
-   data.map(card => rootElement.insertAdjacentHTML('beforeend',
+   cards.forEach(card => rootElement.insertAdjacentHTML('beforeend',
      `<div class="listedCardsMain" >
      Name: ${card.name}</br>
      <img src=${card.url}></img>
@@ -28,7 +26,14 @@ function displayMain(data) {
      Cost: ${card.cost}</br>
      <button id="${card.id}">Add to Deck</button>
      </div>`))
+}
 
+function displayMain(data) {
+   menuElement.replaceChildren();
+   titleElement.replaceChildren();
+
+   titleElement.insertAdjacentHTML("beforeend", " <div>Legends Of Runterra</div>")
+   
    //Region Selector
    let region = [];
 
@@ -86,6 +91,8 @@ function displayMain(data) {
 
    menuElement.insertAdjacentHTML("beforeend" , "<button id=nextbtn>My Deck</button>")
    menuElement.insertAdjacentHTML("beforeend" , "<button id=resetbtn>Reset</button>")
+
+   displayCards(data);
 }
 
 function displayDeck(data) {
@@ -134,7 +141,7 @@ function FilteringCriterias(event) {
       body: JSON.stringify(new_obj),
    })
       .then((response) => response.json())
-      .then((data) => displayMain(data))
+      .then((data) => displayCards(data))
 }
 
 function addDeck(event) {
@@ -142,7 +149,8 @@ function addDeck(event) {
       fetch(`http://127.0.0.1:9007/api/cards/?addDeck=${event.target.id}`) 
 
    }  
-   if(window.location.href === 'http://127.0.0.1:9007/cards/deck' && event.target.value != undefined) {
+   if(window.location.href.endsWith('/cards/deck') && event.target.value != undefined) {
+
       location.reload();
    }
 }
