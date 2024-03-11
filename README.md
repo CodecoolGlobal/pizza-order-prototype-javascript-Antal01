@@ -26,19 +26,28 @@ Since this project was created before I learned React, it solely focuses on the 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Getting Started  
-
-#### Clone the repository:  
-https://github.com/CodecoolGlobal/pizza-order-prototype-javascript-Antal01.git  
-
-#### Navigate to the required directory:  
-cd pizza-order-prototype-javascript-Antal01  
-
-#### Run command:  
-npm run startDev  
-
-#### Use the following port:  
-http://127.0.0.1:9007/cards  
-
+1. Clone the repo:
+   ```sh
+   git clone https://github.com/CodecoolGlobal/pizza-order-prototype-javascript-Antal01.git 
+   ```   
+3. Install NPM packages:   
+   ```sh
+   npm install
+   ```   
+4. Using terminal navigate to the following:
+    ```sh
+   cd pizza-order-prototype-javascript-Antal01
+   ```
+5. Run command:
+   ```sh
+   npm run startDev
+   ```   
+6. Use the following port:
+   ```sh
+   http://127.0.0.1:9007/cards
+   ```
+   <p align="right">(<a href="#readme-top">back to top</a>)</p>   
+   
 ## Authors  
 Tihamér Antal    
 Borisz Bisits  
