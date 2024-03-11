@@ -49,10 +49,13 @@ Since this project was created before I learned React, it solely focuses on the 
    <p align="right">(<a href="#readme-top">back to top</a>)</p>   
    
 ## Authors  
-Tihamér Antal    
-Borisz Bisits  
+1. Tihamér Antal    
+2. Borisz Bisits
+   <p align="right">(<a href="#readme-top">back to top</a>)</p>  
 
 ## Contact  
 Tihamér Antal  
 LinkedIn: www.linkedin.com/in/tihamer-antal/  
-Email: antaltihamer97@gmail.com  
+Email: antaltihamer97@gmail.com 
+
+ <p align="right">(<a href="#readme-top">back to top</a>)</p> 
